@@ -7,4 +7,4 @@ ldap:
   seach_base: dc=example,dc=com
 postfix:
   image: registry.gitlab.exphost.pl/exphost/postfix
-  tag: latest
+  tag: v0.1.0
