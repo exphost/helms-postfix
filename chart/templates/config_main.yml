@@ -37,8 +37,8 @@ data:
     virtual_alias_maps = ldap:/etc/postfix/ldap/virtual_alias_maps
     virtual_mailbox_base = /var/lib/vmail
     virtual_mailbox_maps = ldap:/etc/postfix/ldap/virtual_mailbox_maps
-    virtual_uid_maps = static:230
-    virtual_gid_maps = static:230
+    virtual_uid_maps = static:101
+    virtual_gid_maps = static:102
 
     smtpd_sender_login_maps = ldap:/etc/postfix/ldap/smtpd_sender_login_maps
 
