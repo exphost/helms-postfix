@@ -28,6 +28,8 @@ spec:
             subPath: main.cf
       volumes:
         - name: ldap-config
-          secretName: postfix-ldap-config
+          secret:
+            secretName: postfix-ldap-config
         - name: postfix-config
-          configMap: postfix-config-main-cf
+          configMap:
+            name: postfix-config-main-cf
