@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postfix
+  labels:
+    app: postfix
+spec:
+  type: ClusterIP
+  ports:
+    - name: tcp-smtp
+      port: 25
+      targetPort: 25
+  selector:
+    app: postfix
