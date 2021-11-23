@@ -22,7 +22,7 @@ spec:
   destination_key: virtual_alias_domains
   destination_type: Secret
   values:
-    - name: bane_pw
+    - name: bind_pw
       source_name: password-password-postfix-from-tenant-exphost-services
       source_type: Secret
       source_key: password
@@ -50,7 +50,7 @@ spec:
   destination_key: virtual_alias_maps
   destination_type: Secret
   values:
-    - name: bane_pw
+    - name: bind_pw
       source_name: password-password-postfix-from-tenant-exphost-services
       source_type: Secret
       source_key: password
@@ -79,7 +79,7 @@ spec:
   destination_key: virtual_mailbox_maps
   destination_type: Secret
   values:
-    - name: bane_pw
+    - name: bind_pw
       source_name: password-password-postfix-from-tenant-exphost-services
       source_type: Secret
       source_key: password
