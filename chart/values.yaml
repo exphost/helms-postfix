@@ -1,0 +1,10 @@
+ldap:
+  uri: ldap://openldap
+  bind_dn: cn=admin,dc=example,dc=com
+  bind_pw:
+    secret: password-secret
+    key: password
+  seach_base: dc=example,dc=com
+postfix:
+  image: registry.gitlab.exphost.pl/exphost/postfix
+  tag: latest
