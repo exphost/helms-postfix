@@ -26,6 +26,8 @@ spec:
           - name: postfix-config
             mountPath: /etc/postfix/main.cf
             subPath: main.cf
+          - mountPath: /var/lib/vmail
+            name: vmail
       volumes:
         - name: ldap-config
           secret:
@@ -33,3 +35,6 @@ spec:
         - name: postfix-config
           configMap:
             name: postfix-config-main-cf
+        - name: vmail
+          persistentVolumeClaim:
+            claimName: postfix-vmail
