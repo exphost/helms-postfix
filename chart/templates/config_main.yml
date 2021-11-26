@@ -48,3 +48,11 @@ data:
     smtpd_tls_key_file =  /etc/postfix/ssl/tls.key
     smtpd_tls_security_level = may
     smtpd_tls_auth_only = yes
+
+    smtpd_sasl_path = inet:dovecot-auth:5000
+    smtpd_sasl_type = dovecot
+    smtpd_sasl_auth_enable=yes
+    smtpd_relay_restrictions =
+        permit_mynetworks
+        permit_tls_clientcerts
+        reject_unauth_destination
