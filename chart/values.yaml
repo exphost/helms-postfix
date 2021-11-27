@@ -1,3 +1,4 @@
+domain: example.com
 ldap:
   uri: ldap://openldap
   bind_dn: cn=admin,dc=example,dc=com

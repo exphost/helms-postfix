@@ -28,6 +28,9 @@ spec:
             subPath: main.cf
           - mountPath: /var/lib/vmail
             name: vmail
+          - mountPath: /etc/postfix/ssl
+            name: ssl
+            readOnly: true
       volumes:
         - name: ldap-config
           secret:
@@ -38,3 +41,6 @@ spec:
         - name: vmail
           persistentVolumeClaim:
             claimName: postfix-vmail
+        - name: ssl
+          secret:
+            secretName: postfix-ssl-cert
