@@ -7,6 +7,7 @@ metadata:
     app: postfix
   annotations:
      metallb.universe.tf/allow-shared-ip: ingress-ip
+     external-dns.alpha.kubernetes.io/hostname: smtp.{{ .Values.domain }}
 spec:
   type: LoadBalancer
   ports:
