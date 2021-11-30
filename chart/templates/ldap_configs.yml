@@ -73,7 +73,7 @@ spec:
     
     query_filter = (|(maildrop=%s)(objectclass=virtual_mailbox_maps))
     result_attribute = maildrop
-    result_format = %d/%s/mailbox/
+    result_format = %d/%s/
 
   destination_name: postfix-ldap-config
   destination_key: virtual_mailbox_maps
