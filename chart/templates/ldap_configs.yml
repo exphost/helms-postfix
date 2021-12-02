@@ -83,3 +83,31 @@ spec:
       source_name: password-password-postfix-from-tenant-exphost-services
       source_type: Secret
       source_key: password
+---
+apiVersion: exphost.pl/v1
+kind: Template
+metadata:
+  name: postfix-config-ldap-sender-login-maps
+spec:
+  template: |
+    server_host = {{ .Values.ldap.uri }}
+    version = 3
+    
+    bind = yes
+    bind_dn = {{ .Values.ldap.bind_dn }}
+    bind_pw = {{ "{{" }} bind_pw {{ "}}" }}
+    
+    search_base = {{ .Values.ldap.search_base }}
+    scope = sub
+    
+    query_filter = (|(maildrop=%s)(objectclass=smtpd_sender_login_maps))
+    result_attribute = maildrop
+
+  destination_name: postfix-ldap-config
+  destination_key: stmpd_sender_login_maps
+  destination_type: Secret
+  values:
+    - name: bind_pw
+      source_name: password-password-postfix-from-tenant-exphost-services
+      source_type: Secret
+      source_key: password

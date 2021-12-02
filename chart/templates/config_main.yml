@@ -54,5 +54,5 @@ data:
     smtpd_sasl_auth_enable=yes
     smtpd_relay_restrictions =
         permit_mynetworks
-        permit_tls_clientcerts
+        permit_sasl_authenticated
         reject_unauth_destination
