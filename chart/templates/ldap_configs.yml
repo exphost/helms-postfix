@@ -2,109 +2,63 @@
 apiVersion: exphost.pl/v1
 kind: Template
 metadata:
-  name: postfix-config-ldap-alias-domains
+  name: postfix-config-ldap
 spec:
-  template: |
-    server_host = {{ .Values.ldap.uri }}
-    version = 3
-    
-    bind = yes
-    bind_dn = {{ .Values.ldap.bind_dn }}
-    bind_pw = {{ "{{" }} bind_pw {{ "}}" }}
-    
-    search_base = {{ .Values.ldap.search_base }}
-    
-    query_filter = (|(mailacceptinggeneralid=*@%s)(objectclass=virtual_alias_domains))
-    result_attribute = mailacceptinggeneralid
-    result_format = %d
+  templates:
+    virtual_alias_domains: |
+      server_host = {{ .Values.ldap.uri }}
+      version = 3
+      
+      bind = yes
+      bind_dn = {{ .Values.ldap.bind_dn }}
+      bind_pw = {{ "{{" }} bind_pw {{ "}}" }}
+      
+      search_base = {{ .Values.ldap.search_base }}
+      
+      query_filter = (|(mailacceptinggeneralid=*@%s)(objectclass=virtual_alias_domains))
+      result_attribute = mailacceptinggeneralid
+      result_format = %d
+    virtual_alias_maps: |
+      server_host = {{ .Values.ldap.uri }}
+      version = 3
+      
+      bind = yes
+      bind_dn = {{ .Values.ldap.bind_dn }}
+      bind_pw = {{ "{{" }} bind_pw {{ "}}" }}
+      
+      search_base = {{ .Values.ldap.search_base }}
+      scope = sub
+      
+      query_filter = (|(mailacceptinggeneralid=%s)(objectclass=virtual_alias_maps))
 
+    virtual_mailbox_maps: |
+      server_host = {{ .Values.ldap.uri }}
+      version = 3
+      
+      bind = yes
+      bind_dn = {{ .Values.ldap.bind_dn }}
+      bind_pw = {{ "{{" }} bind_pw {{ "}}" }}
+      
+      search_base = {{ .Values.ldap.search_base }}
+      scope = sub
+      
+      query_filter = (|(maildrop=%s)(objectclass=virtual_mailbox_maps))
+      result_attribute = maildrop
+      result_format = %d/%s/
+    smtpd_sender_login_maps: |
+      server_host = {{ .Values.ldap.uri }}
+      version = 3
+      
+      bind = yes
+      bind_dn = {{ .Values.ldap.bind_dn }}
+      bind_pw = {{ "{{" }} bind_pw {{ "}}" }}
+      
+      search_base = {{ .Values.ldap.search_base }}
+      scope = sub
+      
+      query_filter = (|(maildrop=%s)(objectclass=smtpd_sender_login_maps))
+      result_attribute = maildrop
   destination_name: postfix-ldap-config
-  destination_key: virtual_alias_domains
-  destination_type: Secret
-  values:
-    - name: bind_pw
-      source_name: password-password-postfix-from-tenant-exphost-services
-      source_type: Secret
-      source_key: password
----
-apiVersion: exphost.pl/v1
-kind: Template
-metadata:
-  name: postfix-config-ldap-alias-maps
-spec:
-  template: |
-    server_host = {{ .Values.ldap.uri }}
-    version = 3
-    
-    bind = yes
-    bind_dn = {{ .Values.ldap.bind_dn }}
-    bind_pw = {{ "{{" }} bind_pw {{ "}}" }}
-    
-    search_base = {{ .Values.ldap.search_base }}
-    scope = sub
-    
-    query_filter = (|(mailacceptinggeneralid=%s)(objectclass=virtual_alias_maps))
-    result_attribute = maildrop
-
-  destination_name: postfix-ldap-config
-  destination_key: virtual_alias_maps
-  destination_type: Secret
-  values:
-    - name: bind_pw
-      source_name: password-password-postfix-from-tenant-exphost-services
-      source_type: Secret
-      source_key: password
----
-apiVersion: exphost.pl/v1
-kind: Template
-metadata:
-  name: postfix-config-ldap-mailbox-maps
-spec:
-  template: |
-    server_host = {{ .Values.ldap.uri }}
-    version = 3
-    
-    bind = yes
-    bind_dn = {{ .Values.ldap.bind_dn }}
-    bind_pw = {{ "{{" }} bind_pw {{ "}}" }}
-    
-    search_base = {{ .Values.ldap.search_base }}
-    scope = sub
-    
-    query_filter = (|(maildrop=%s)(objectclass=virtual_mailbox_maps))
-    result_attribute = maildrop
-    result_format = %d/%s/
-
-  destination_name: postfix-ldap-config
-  destination_key: virtual_mailbox_maps
-  destination_type: Secret
-  values:
-    - name: bind_pw
-      source_name: password-password-postfix-from-tenant-exphost-services
-      source_type: Secret
-      source_key: password
----
-apiVersion: exphost.pl/v1
-kind: Template
-metadata:
-  name: postfix-config-ldap-sender-login-maps
-spec:
-  template: |
-    server_host = {{ .Values.ldap.uri }}
-    version = 3
-    
-    bind = yes
-    bind_dn = {{ .Values.ldap.bind_dn }}
-    bind_pw = {{ "{{" }} bind_pw {{ "}}" }}
-    
-    search_base = {{ .Values.ldap.search_base }}
-    scope = sub
-    
-    query_filter = (|(maildrop=%s)(objectclass=smtpd_sender_login_maps))
-    result_attribute = maildrop
-
-  destination_name: postfix-ldap-config
-  destination_key: stmpd_sender_login_maps
   destination_type: Secret
   values:
     - name: bind_pw
