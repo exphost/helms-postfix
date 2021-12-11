@@ -16,3 +16,4 @@ deploy-to-dev:
     repo: git@gitlab.exphost.pl:exphost/tenant-exphost-services-home-lab.git
     yamlfile: exphost-services.yml
     app: postfix
+    waitapp: tenant-exphost-services-postfix
