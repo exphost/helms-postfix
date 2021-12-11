@@ -14,5 +14,11 @@ spec:
     - name: tcp-smtp
       port: 25
       targetPort: 25
+    - name: tcp-smtps
+      port: 465
+      targetPort: smtps
+    - name: tcp-submission
+      port: 587
+      targetPort: submission
   selector:
     app: postfix

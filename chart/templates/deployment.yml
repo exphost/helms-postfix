@@ -19,6 +19,11 @@ spec:
         image: {{ .Values.postfix.image }}:{{ .Values.postfix.tag }}
         ports:
         - containerPort: 25
+          name: smtp
+        - containerPort: 465
+          name: smtps
+        - containerPort: 587
+          name: submission
         volumeMounts:
           - mountPath: /etc/postfix/ldap
             name: ldap-config
@@ -26,6 +31,9 @@ spec:
           - name: postfix-config
             mountPath: /etc/postfix/main.cf
             subPath: main.cf
+          - name: postfix-config
+            mountPath: /etc/postfix/master.cf
+            subPath: master.cf
           - mountPath: /var/lib/vmail
             name: vmail
           - mountPath: /etc/postfix/ssl
