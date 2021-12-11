@@ -28,6 +28,9 @@ data:
     meta_directory = /etc/postfix
     shlib_directory = /usr/lib/postfix
     # ============================================
+    {{- if .Values.hostname }}
+    myhostname = {{ .Values.hostname }}
+    {{- end }}
 
     mydestination =
     inet_interfaces = all
