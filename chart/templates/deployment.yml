@@ -14,6 +14,16 @@ spec:
       labels:
         app: postfix
     spec:
+      initContainers:
+      - name: touch-logfile
+        image: {{ .Values.postfix.image }}:{{ .Values.postfix.tag }}
+        command:
+          - sh
+          - -c
+          - "touch /var/log/mail/maillog; chown postfix /var/log/mail/maillog; chmod 666 /var/log/mail/maillog"
+        volumeMounts:
+          - mountPath: /var/log/mail
+            name: logs
       containers:
       - name: postfix
         image: {{ .Values.postfix.image }}:{{ .Values.postfix.tag }}
@@ -39,6 +49,24 @@ spec:
           - mountPath: /etc/postfix/ssl
             name: ssl
             readOnly: true
+          - mountPath: /var/log/mail
+            name: logs
+          - mountPath: /var/spool/postfix/public/
+            name: sockets
+      - name: metrics
+        image: registry.gitlab.exphost.pl/torgiren/postfix_exporter:0.3.0
+        command:
+          - sh
+          - -c
+          - 'ls -l /var/log/; ls -l  /var/log/mail/; /bin/postfix_exporter --web.listen-address=":9000" --postfix.logfile_path="/var/log/mail/maillog"'
+        ports:
+        - containerPort: 9000
+          name: metrics
+        volumeMounts:
+          - mountPath: /var/log/mail
+            name: logs
+          - mountPath: /var/spool/postfix/public/
+            name: sockets
       volumes:
         - name: ldap-config
           secret:
@@ -52,3 +80,7 @@ spec:
         - name: ssl
           secret:
             secretName: postfix-ssl-cert
+        - name: logs
+          emptyDir: {}
+        - name: sockets
+          emptyDir: {}
