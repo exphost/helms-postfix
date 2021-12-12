@@ -45,7 +45,7 @@ data:
 
     smtpd_sender_login_maps = ldap:/etc/postfix/ldap/smtpd_sender_login_maps
 
-    maillog_file = /dev/stdout
+    maillog_file = /var/log/mail/maillog
 
     smtpd_tls_cert_file = /etc/postfix/ssl/tls.crt
     smtpd_tls_key_file =  /etc/postfix/ssl/tls.key
