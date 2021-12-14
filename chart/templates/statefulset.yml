@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: postfix
   labels:
@@ -9,6 +9,7 @@ spec:
   selector:
     matchLabels:
       app: postfix
+  serviceName: postfix
   template:
     metadata:
       labels:
@@ -51,6 +52,8 @@ spec:
             readOnly: true
           - mountPath: /var/log/mail
             name: logs
+          - mountPath: /var/spool/postfix/
+            name: postfix-queue
           - mountPath: /var/spool/postfix/public/
             name: sockets
       - name: metrics
@@ -84,3 +87,11 @@ spec:
           emptyDir: {}
         - name: sockets
           emptyDir: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: postfix-queue
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
