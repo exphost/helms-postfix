@@ -17,3 +17,4 @@ deploy-to-dev:
     yamlfile: exphost-services.yml
     app: postfix
     waitapp: tenant-exphost-services-postfix
+    refreshapp: tenant-exphost-services
