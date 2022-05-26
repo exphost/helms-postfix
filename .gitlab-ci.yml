@@ -7,6 +7,9 @@ stages:
   - upload
   - deploy
 
+upload:
+  extends: .upload
+
 deploy-to-dev:
   stage: deploy
   extends: .deploy-to-git-subapp
@@ -16,5 +19,5 @@ deploy-to-dev:
     repo: git@gitlab.exphost.pl:exphost/tenant-exphost-services-home-lab.git
     yamlfile: exphost-services.yml
     app: postfix
-    waitapp: tenant-exphost-services-postfix
-    refreshapp: tenant-exphost-services
+    #waitapp: tenant-exphost-services-postfix
+    #refreshapp: tenant-exphost-services

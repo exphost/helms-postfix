@@ -9,4 +9,7 @@ ldap:
 postfix:
   image: registry.gitlab.exphost.pl/exphost/postfix
   tag: v0.1.0
+persistence:
+  size: 8Gi
+  # storageClass: storageclass
 # hostname: ~
