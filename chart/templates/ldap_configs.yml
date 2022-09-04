@@ -62,6 +62,6 @@ spec:
   destination_type: Secret
   values:
     - name: bind_pw
-      source_name: password-password-postfix-from-tenant-exphost-services
+      source_name: {{ .Values.ldap.bind_pw.secret }}
       source_type: Secret
-      source_key: password
+      source_key: {{ .Values.ldap.bind_pw.key }}
